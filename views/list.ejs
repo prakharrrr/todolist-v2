@@ -1,0 +1,32 @@
+<%- include("header") -%>
+
+  <div class="box" id="heading">
+    <h1> <%= listTitle %> </h1> 
+    <!-- title being provided by app.js (either home page or custome routes) -->
+  </div>
+
+  <div class="box">
+    <% for (let i=0; i<newListItems.length; i++) { %>
+      <form action="/delete" method="post">
+        <div class="item">
+          <input type="checkbox" name="checkbox" value="<%=newListItems[i]._id %>" onChange="this.form.submit()">
+          <!-- onChange is used to submit the form everytime we press the checkbox -->
+          <p><%=  newListItems[i].name  %></p>
+        </div>
+         <input type="hidden" name="listName" value="<%=listTitle %>"></input>
+         <!-- this shit is used to send another piece of data back to app.js and this shit is 
+         hidden from the user. we did it because our checkbox already had a value entry
+         and we could not add another submit button here. -->
+      </form>
+      
+      <% } %>
+
+      <form class="item" action="/" method="post">
+        <input type="text" name="newItem" placeholder="New Item" autocomplete="off">
+        <button type="submit" name="list" value="<%= listTitle %>">+</button>
+        <!-- the same listTitle that was provided be app.js. We do this here to send the info
+        back so as to understand which list we are suppossed to add the item to -->
+      </form>
+  </div>
+
+<%- include("footer") -%>
